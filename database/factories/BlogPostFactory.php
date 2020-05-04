@@ -6,7 +6,7 @@ use App\Models\BlogPost;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
-$factory->define(\AppModels\BlogPost::class, function (Faker $faker) {
+$factory->define(\App\Model\BlogPosts::class, function (Faker $faker) {
     $title = $faker->sentence(rand(3, 8), true);
     $txt = $faker->realText(rand(1000, 4000));
     $isPublished = rand(1, 5) > 1;
@@ -18,7 +18,7 @@ $factory->define(\AppModels\BlogPost::class, function (Faker $faker) {
         'user_id'       => (rand(1, 5) == 5) ? 1 : 2,
         'title'         => $title,
         'slug'          => Str::slug($title),
-        'excerpt'       => $faker->text(rand(40, 100)),
+        'exerpt'       => $faker->text(rand(40, 100)),
         'content_raw'   => $txt,
         'content_html'  => $txt,
         'is_published'  => $isPublished,
