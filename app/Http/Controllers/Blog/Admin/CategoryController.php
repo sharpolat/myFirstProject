@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Blog\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Model\BlogCategories;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+
+class CategoryController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $paginator = BlogCategories::paginate(5); 
+
+        return view('blog.admin.categories.index', compact('paginator'));
     }
 
     /**
@@ -24,7 +27,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        dd(__METHOD__);
     }
 
     /**
@@ -35,18 +38,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        dd(__METHOD__);
     }
 
     /**
@@ -57,7 +49,12 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $item = BlogCategories::find($id);
+
+        $categoryList = BlogCategories::all();
+
+        return view('blog.admin.categories.edit', 
+        compact('item', 'categoryList'));
     }
 
     /**
@@ -69,17 +66,14 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd($id);
+        $item = BlogCategory::find($id);
+        if (empty($item)) {
+            return back()
+                ->withErrors(['msg' => "Запись id=[{$id}] не найдена"])
+                ->withInput();
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+    
 }
