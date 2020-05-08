@@ -36,6 +36,9 @@ Route::group($groupdata, function (){
     ->names('blog.admin.categories');
     
 });
+Route::group(['namespace' => 'Learn', 'prefix' => 'learn'], function (){
+    Route::resource('bootsrap', 'LearnTestController')->names('learn.bootstrap');
+});
 //<
 
 //Route::resource('rest', 'RestTestController')->names('restTest');  

@@ -37,7 +37,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> <!-- Прокрутка данных( сколько дано в paginator )  -->
         @if($paginator->total() > $paginator->count())
             <br>
             <div class="row justify-content-center">
