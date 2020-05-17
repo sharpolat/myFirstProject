@@ -30,16 +30,24 @@ $groupdata = [
     'prefix' => 'admin/blog'
 ];
 Route::group($groupdata, function (){
+    //BlogCategory
     $methods = ['index', 'edit', 'store', 'update', 'create'];
     Route::resource('categories', 'CategoryController')
-    ->only($methods)
-    ->names('blog.admin.categories');
-    
+        ->only($methods)
+        ->names('blog.admin.categories');
+    //BlogPost
+    Route::resource('posts', 'PostController')
+        ->except(['show'])
+        ->names('blog.admin.posts');
 });
 Route::group(['namespace' => 'Learn', 'prefix' => 'learn'], function (){
     Route::resource('bootsrap', 'LearnTestController')->names('learn.bootstrap');
 });
 //<
+
+Route::resource('posts', 'PostController')
+    ->except(['show'])
+    ->names('blog.admin.posts');
 
 //Route::resource('rest', 'RestTestController')->names('restTest');  
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Blog\Admin;
 use App\Model\BlogCategories;
 use App\Http\Requests\BlogCategoriesUpdateRequest;
 use App\Http\Requests\BlogCategoriesCreateRequest;
+use App\Repositories\BlogCategoryRepository;
 
 use Illuminate\Http\Request;
 
@@ -12,6 +13,15 @@ use Illuminate\Http\Request;
 
 class CategoryController extends BaseController
 {
+
+    private $blogCategoryRepository;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->$blogCategoryRepository = app(BlogCategoryRepository::class);    
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +29,7 @@ class CategoryController extends BaseController
      */
     public function index()
     {
-        $paginator = BlogCategories::paginate(5); 
+        $paginator = $this->blogCategoryRepository->getAllWithPaginate(5);
 
         return view('blog.admin.categories.index', compact('paginator'));
     }
