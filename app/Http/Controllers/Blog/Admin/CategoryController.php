@@ -6,7 +6,6 @@ use App\Model\BlogCategories;
 use App\Http\Requests\BlogCategoriesUpdateRequest;
 use App\Http\Requests\BlogCategoriesCreateRequest;
 use App\Repositories\BlogCategoryRepository;
-
 use Illuminate\Http\Request;
 
 
@@ -42,7 +41,7 @@ class CategoryController extends BaseController
     public function create()
     {
         $item = new BlogCategories;
-        $categoryList = BlogCategories::all();
+        $categoryList = $this->blogCategoryRepository->getComboBox();
         
         return view('blog.admin.categories.edit', 
         compact('item', 'categoryList'));
@@ -83,9 +82,14 @@ class CategoryController extends BaseController
      */
     public function edit($id)
     {
-        $item = BlogCategories::find($id);
+        $item = $this->blogCategoryRepository->getEdit(id);
 
-        $categoryList = BlogCategories::all();
+        if(empty($item))
+        {
+            abort(404);
+        }
+
+        $categoryList = $this->blogCategoryRepository->getComboBox($item->parent_id);
 
         return view('blog.admin.categories.edit', 
         compact('item', 'categoryList'));
@@ -105,13 +109,12 @@ class CategoryController extends BaseController
         
 
 
-        $item = BlogCategories::find($id);
+        $item = $this->blogCategoryRepository->getEdit(id);
         if (empty($item)) {
             return back()
                 ->withErrors(['msg' => "Запись id=[{$id}] не найдена"])
                 ->withInput();
         }
-
         $data = $request->all();
         $result = $item
             ->fill($data)

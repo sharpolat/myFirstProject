@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Blog\Admin;
 
 use App\Repositories\BlogPostRepository;
 use App\Model\BlogPosts;
-
 use Illuminate\Http\Request;
 
 class PostController extends BaseController

@@ -14,4 +14,14 @@ class BlogPosts extends Model
         'parent_id',
         'description',
     ];
+
+    function public category()
+    {
+        return $this->belongsTo(BlogCategory::class);
+    }
+
+    function public user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
